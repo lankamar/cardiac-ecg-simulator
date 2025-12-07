@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🫀 Cardiac ECG Simulator</title>
+    <title>🫀 Cardiac ECG Simulator - 54 Arrhythmias</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -17,8 +18,9 @@
             --text-primary: #f9fafb;
             --text-secondary: #9ca3af;
             --border: #374151;
-            --ecg-grid: rgba(16, 185, 129, 0.1);
-            --ecg-grid-major: rgba(16, 185, 129, 0.2);
+            --ecg-paper: #1a1a1a;
+            --ecg-grid-small: rgba(180, 60, 60, 0.25);
+            --ecg-grid-large: rgba(180, 60, 60, 0.5);
         }
 
         * {
@@ -37,41 +39,48 @@
 
         .app-container {
             display: grid;
-            grid-template-columns: 320px 1fr;
+            grid-template-columns: 340px 1fr;
             min-height: 100vh;
         }
 
-        /* Sidebar */
         .sidebar {
             background: var(--bg-secondary);
             border-right: 1px solid var(--border);
-            padding: 24px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 16px;
             overflow-y: auto;
+            max-height: 100vh;
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding-bottom: 20px;
+            padding-bottom: 16px;
             border-bottom: 1px solid var(--border);
         }
 
         .logo-icon {
-            font-size: 32px;
+            font-size: 28px;
             animation: pulse 2s ease-in-out infinite;
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
         }
 
         .logo-text {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
             background: linear-gradient(135deg, var(--accent), #34d399);
             -webkit-background-clip: text;
@@ -79,27 +88,28 @@
         }
 
         .section-title {
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             color: var(--text-secondary);
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
         .arrhythmia-select {
             width: 100%;
-            padding: 12px 16px;
+            padding: 10px 12px;
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 12px;
+            border-radius: 10px;
             color: var(--text-primary);
-            font-size: 14px;
+            font-size: 13px;
             cursor: pointer;
             transition: all 0.2s;
         }
 
-        .arrhythmia-select:hover, .arrhythmia-select:focus {
+        .arrhythmia-select:hover,
+        .arrhythmia-select:focus {
             border-color: var(--accent);
             box-shadow: 0 0 0 3px var(--accent-glow);
             outline: none;
@@ -108,11 +118,11 @@
         .control-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
 
         .control-label {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-secondary);
             display: flex;
             justify-content: space-between;
@@ -120,7 +130,7 @@
 
         .slider {
             width: 100%;
-            height: 6px;
+            height: 5px;
             -webkit-appearance: none;
             background: var(--bg-card);
             border-radius: 3px;
@@ -129,8 +139,8 @@
 
         .slider::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             background: var(--accent);
             border-radius: 50%;
             cursor: pointer;
@@ -138,17 +148,17 @@
         }
 
         .btn {
-            padding: 14px 24px;
+            padding: 12px 20px;
             border: none;
-            border-radius: 12px;
-            font-size: 14px;
+            border-radius: 10px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .btn-primary {
@@ -166,53 +176,45 @@
             color: white;
         }
 
-        .btn-secondary {
-            background: var(--bg-card);
-            color: var(--text-primary);
-            border: 1px solid var(--border);
-        }
-
         .button-row {
             display: flex;
-            gap: 12px;
+            gap: 10px;
         }
 
         .button-row .btn {
             flex: 1;
         }
 
-        /* Stats Cards */
         .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 10px;
         }
 
         .stat-card {
             background: var(--bg-card);
-            border-radius: 12px;
-            padding: 16px;
+            border-radius: 10px;
+            padding: 12px;
             text-align: center;
         }
 
         .stat-value {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
             color: var(--accent);
         }
 
         .stat-label {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--text-secondary);
-            margin-top: 4px;
+            margin-top: 2px;
         }
 
-        /* Main Content */
         .main-content {
-            padding: 24px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 20px;
         }
 
         .header {
@@ -222,33 +224,55 @@
         }
 
         .current-arrhythmia {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
         }
 
         .urgency-badge {
-            padding: 8px 16px;
+            padding: 6px 14px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             text-transform: uppercase;
         }
 
-        .urgency-low { background: rgba(16, 185, 129, 0.2); color: var(--accent); }
-        .urgency-medium { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
-        .urgency-high { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
-        .urgency-critical { background: var(--danger); color: white; animation: blink 1s infinite; }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        .urgency-low {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent);
         }
 
-        /* ECG Display */
+        .urgency-medium {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+
+        .urgency-high {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+        }
+
+        .urgency-critical {
+            background: var(--danger);
+            color: white;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
         .ecg-container {
             flex: 1;
             background: var(--bg-secondary);
-            border-radius: 16px;
+            border-radius: 14px;
             border: 1px solid var(--border);
             overflow: hidden;
             position: relative;
@@ -258,22 +282,23 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 24px;
+            padding: 12px 20px;
             border-bottom: 1px solid var(--border);
+            background: var(--bg-card);
         }
 
         .lead-tabs {
             display: flex;
-            gap: 8px;
+            gap: 6px;
         }
 
         .lead-tab {
-            padding: 8px 16px;
+            padding: 6px 14px;
             background: transparent;
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 6px;
             color: var(--text-secondary);
-            font-size: 13px;
+            font-size: 12px;
             cursor: pointer;
             transition: all 0.2s;
         }
@@ -286,13 +311,25 @@
 
         .ecg-canvas-wrapper {
             position: relative;
-            height: calc(100% - 60px);
-            background: 
-                linear-gradient(var(--ecg-grid-major) 1px, transparent 1px),
-                linear-gradient(90deg, var(--ecg-grid-major) 1px, transparent 1px),
-                linear-gradient(var(--ecg-grid) 1px, transparent 1px),
-                linear-gradient(90deg, var(--ecg-grid) 1px, transparent 1px);
-            background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+            height: calc(100% - 50px);
+            background-color: #1a1a1a;
+            background-image:
+                linear-gradient(var(--ecg-grid-large) 2px, transparent 2px),
+                linear-gradient(90deg, var(--ecg-grid-large) 2px, transparent 2px),
+                linear-gradient(var(--ecg-grid-small) 1px, transparent 1px),
+                linear-gradient(90deg, var(--ecg-grid-small) 1px, transparent 1px);
+            background-size: 125px 125px, 125px 125px, 25px 25px, 25px 25px;
+        }
+
+        .ecg-scale {
+            position: absolute;
+            bottom: 8px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 6px 10px;
+            border-radius: 5px;
+            font-size: 10px;
+            color: var(--text-secondary);
         }
 
         #ecgCanvas {
@@ -300,104 +337,136 @@
             height: 100%;
         }
 
-        /* Info Panel */
         .info-panel {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
+            gap: 14px;
         }
 
         .info-card {
             background: var(--bg-secondary);
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 10px;
+            padding: 16px;
             border: 1px solid var(--border);
         }
 
         .info-card-title {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-secondary);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .info-card-value {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 600;
         }
 
         .info-card-unit {
-            font-size: 14px;
+            font-size: 12px;
             color: var(--text-secondary);
-            margin-left: 4px;
+            margin-left: 3px;
         }
 
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .app-container {
-                grid-template-columns: 1fr;
-            }
-            .sidebar {
-                position: fixed;
-                left: -320px;
-                top: 0;
-                height: 100vh;
-                z-index: 100;
-                transition: left 0.3s;
-            }
-            .sidebar.open {
-                left: 0;
-            }
+        .count-badge {
+            background: var(--accent);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
         }
     </style>
 </head>
+
 <body>
     <div class="app-container">
-        <!-- Sidebar -->
         <aside class="sidebar">
             <div class="logo">
                 <span class="logo-icon">🫀</span>
                 <span class="logo-text">ECG Simulator</span>
+                <span class="count-badge">54</span>
             </div>
 
             <div>
-                <div class="section-title">Seleccionar Arritmia</div>
+                <div class="section-title">Seleccionar Arritmia (54 tipos)</div>
                 <select class="arrhythmia-select" id="arrhythmiaSelect">
-                    <optgroup label="🟢 Normal">
+                    <!-- NORMAL (1) -->
+                    <optgroup label="🟢 Normal (1)">
                         <option value="normal_sinus">Normal Sinus Rhythm</option>
                     </optgroup>
-                    <optgroup label="🔵 Supraventricular - Bradiarritmias">
+
+                    <!-- SUPRAVENTRICULAR BRADYARRHYTHMIAS (6) -->
+                    <optgroup label="🔵 Supraventricular Brady (6)">
                         <option value="sinus_bradycardia">Sinus Bradycardia</option>
                         <option value="sick_sinus">Sick Sinus Syndrome</option>
-                        <option value="av_block_1">AV Block 1st Degree</option>
+                        <option value="av_block_1">AV Block 1st Degree (PR largo)</option>
                         <option value="av_block_2_wenckebach">AV Block 2nd Wenckebach</option>
                         <option value="av_block_2_mobitz">AV Block 2nd Mobitz II</option>
-                        <option value="av_block_complete">Complete AV Block</option>
+                        <option value="av_block_complete">Complete AV Block (3rd degree)</option>
                     </optgroup>
-                    <optgroup label="🟡 Supraventricular - Taquiarritmias">
+
+                    <!-- SUPRAVENTRICULAR TACHYARRHYTHMIAS (14) -->
+                    <optgroup label="🟡 Supraventricular Tachy (14)">
                         <option value="sinus_tachycardia">Sinus Tachycardia</option>
-                        <option value="atrial_fibrillation">Atrial Fibrillation</option>
+                        <option value="atrial_tachycardia">Atrial Tachycardia</option>
                         <option value="atrial_flutter">Atrial Flutter</option>
+                        <option value="atrial_flutter_atypical">Atypical Atrial Flutter</option>
+                        <option value="atrial_fibrillation">Atrial Fibrillation</option>
                         <option value="avnrt">AVNRT</option>
                         <option value="avrt">AVRT</option>
                         <option value="wpw">WPW Syndrome</option>
                         <option value="psvt">PSVT</option>
-                        <option value="mat">Multifocal Atrial Tachycardia</option>
+                        <option value="mat">Multifocal Atrial Tachycardia (MAT)</option>
+                        <option value="focal_at">Focal Atrial Tachycardia</option>
+                        <option value="intra_atrial_reentry">Intra-atrial Reentry</option>
+                        <option value="sinus_node_reentry">Sinus Node Reentry</option>
+                        <option value="ectopic_atrial">Ectopic Atrial Rhythm</option>
                     </optgroup>
-                    <optgroup label="🔴 Ventriculares">
-                        <option value="pvc">PVC</option>
+
+                    <!-- OTHER SUPRAVENTRICULAR (10) -->
+                    <optgroup label="🟣 Otras Supraventriculares (10)">
+                        <option value="pac">PAC (Premature Atrial Contraction)</option>
+                        <option value="pjc">PJC (Premature Junctional)</option>
+                        <option value="junctional_escape">Junctional Escape Rhythm</option>
+                        <option value="junctional_tachy">Junctional Tachycardia</option>
+                        <option value="jet">JET (Junctional Ectopic Tachy)</option>
+                        <option value="wandering_pacemaker">Wandering Atrial Pacemaker</option>
+                        <option value="sinus_arrhythmia">Sinus Arrhythmia</option>
+                        <option value="sinus_pause">Sinus Pause</option>
+                        <option value="sinus_arrest">Sinus Arrest</option>
+                        <option value="sinoatrial_block">Sinoatrial Exit Block</option>
+                    </optgroup>
+
+                    <!-- VENTRICULAR ARRHYTHMIAS (16) -->
+                    <optgroup label="🔴 Ventriculares (16)">
+                        <option value="pvc">PVC (Premature Ventricular)</option>
                         <option value="pvc_bigeminy">PVC Bigeminy</option>
                         <option value="pvc_trigeminy">PVC Trigeminy</option>
+                        <option value="pvc_couplet">PVC Couplet</option>
+                        <option value="pvc_triplet">PVC Triplet / NSVT</option>
+                        <option value="aivr">AIVR (Accelerated Idioventricular)</option>
+                        <option value="ventricular_escape">Ventricular Escape Rhythm</option>
                         <option value="vt_mono">VT Monomorphic</option>
                         <option value="vt_poly">VT Polymorphic</option>
+                        <option value="vt_sustained">VT Sustained</option>
+                        <option value="vt_nonsustained">VT Non-Sustained (NSVT)</option>
                         <option value="torsades">Torsades de Pointes</option>
                         <option value="vf_coarse">VF Coarse</option>
                         <option value="vf_fine">VF Fine</option>
                         <option value="asystole">Asystole</option>
+                        <option value="idioventricular">Idioventricular Rhythm</option>
                     </optgroup>
-                    <optgroup label="🟣 Fenómenos Especiales">
-                        <option value="brugada">Brugada Pattern</option>
-                        <option value="r_on_t">R-on-T Phenomenon</option>
+
+                    <!-- SPECIAL PHENOMENA (8) -->
+                    <optgroup label="⚡ Fenómenos Especiales (8)">
+                        <option value="parasystole">Parasystole</option>
                         <option value="fusion">Fusion Beat</option>
+                        <option value="capture">Capture Beat</option>
+                        <option value="r_on_t">R-on-T Phenomenon</option>
+                        <option value="ashman">Ashman Phenomenon</option>
+                        <option value="concealed">Concealed Conduction</option>
+                        <option value="av_dissociation">AV Dissociation</option>
+                        <option value="brugada">Brugada Pattern</option>
                     </optgroup>
                 </select>
             </div>
@@ -414,9 +483,9 @@
             <div class="control-group">
                 <div class="control-label">
                     <span>Noise Level</span>
-                    <span id="noiseValue">2%</span>
+                    <span id="noiseValue">0%</span>
                 </div>
-                <input type="range" class="slider" id="noiseSlider" min="0" max="20" value="2">
+                <input type="range" class="slider" id="noiseSlider" min="0" max="20" value="0">
             </div>
 
             <div class="control-group">
@@ -428,12 +497,8 @@
             </div>
 
             <div class="button-row">
-                <button class="btn btn-primary" id="startBtn">
-                    ▶️ Start
-                </button>
-                <button class="btn btn-danger" id="stopBtn">
-                    ⏹️ Stop
-                </button>
+                <button class="btn btn-primary" id="startBtn">▶️ Start</button>
+                <button class="btn btn-danger" id="stopBtn">⏹️ Stop</button>
             </div>
 
             <div class="stats-grid">
@@ -455,14 +520,13 @@
                 </div>
             </div>
 
-            <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid var(--border);">
-                <div class="section-title">Coverage</div>
-                <div style="color: var(--accent); font-size: 24px; font-weight: 700;">54/54</div>
-                <div style="color: var(--text-secondary); font-size: 12px;">Arritmias implementadas</div>
+            <div style="margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border);">
+                <div class="section-title">Cobertura Total</div>
+                <div style="color: var(--accent); font-size: 24px; font-weight: 700;">54/54 ✓</div>
+                <div style="color: var(--text-secondary); font-size: 11px;">Arritmias implementadas</div>
             </div>
         </aside>
 
-        <!-- Main Content -->
         <main class="main-content">
             <div class="header">
                 <h1 class="current-arrhythmia" id="currentName">Normal Sinus Rhythm</h1>
@@ -477,19 +541,21 @@
                         <button class="lead-tab" data-lead="V1">V1</button>
                         <button class="lead-tab" data-lead="V5">V5</button>
                     </div>
-                    <div style="color: var(--text-secondary); font-size: 13px;">
-                        25 mm/s | 10 mm/mV
+                    <div style="color: var(--text-secondary); font-size: 12px;">
+                        📐 25 mm/s | 10 mm/mV
                     </div>
                 </div>
                 <div class="ecg-canvas-wrapper">
                     <canvas id="ecgCanvas"></canvas>
+                    <div class="ecg-scale">1 cuadro grande = 0.2s | 1 cuadro pequeño = 0.04s</div>
                 </div>
             </div>
 
             <div class="info-panel">
                 <div class="info-card">
                     <div class="info-card-title">Rate</div>
-                    <div class="info-card-value" style="color: var(--accent);" id="infoRate">72<span class="info-card-unit">bpm</span></div>
+                    <div class="info-card-value" style="color: var(--accent);" id="infoRate">72<span
+                            class="info-card-unit">bpm</span></div>
                 </div>
                 <div class="info-card">
                     <div class="info-card-title">Mechanism</div>
@@ -507,6 +573,7 @@
         </main>
     </div>
 
-    <script src="ecg-simulator.js"></script>
+    <script src="ecg-simulator-full.js"></script>
 </body>
+
 </html>
