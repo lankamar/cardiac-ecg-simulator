@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🫀 ECG Simulator - Educational Mode</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0f1a;
+            --bg-secondary: #111827;
+            --bg-card: #1f2937;
+            --accent: #10b981;
+            --accent-glow: rgba(16, 185, 129, 0.3);
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --border: #374151;
+            --ecg-grid-small: rgba(200, 80, 80, 0.3);
+            --ecg-grid-large: rgba(200, 80, 80, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .app-container {
+            display: grid;
+            grid-template-columns: 320px 1fr 320px;
+            min-height: 100vh;
+        }
+
+        /* Sidebar izquierdo - Controles */
+        .sidebar {
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo-icon {
+            font-size: 24px;
+        }
+
+        .logo-text {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .logo-badge {
+            font-size: 10px;
+            background: var(--info);
+            padding: 2px 6px;
+            border-radius: 8px;
+        }
+
+        .section-title {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        /* Layer Selector */
+        .layer-selector {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .layer-btn {
+            flex: 1;
+            padding: 10px 8px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .layer-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        .layer-btn:hover:not(.active) {
+            border-color: var(--accent);
+        }
+
+        .layer-info {
+            font-size: 9px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .arrhythmia-select {
+            width: 100%;
+            padding: 10px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .control-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .slider {
+            width: 100%;
+            height: 4px;
+            -webkit-appearance: none;
+            background: var(--bg-card);
+            border-radius: 2px;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            background: var(--accent);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-info {
+            background: var(--info);
+            color: white;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .button-row .btn {
+            flex: 1;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .current-arrhythmia {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .badge-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .urgency-badge,
+        .layer-badge {
+            padding: 5px 12px;
+            border-radius: 16px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .urgency-low {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent);
+        }
+
+        .urgency-medium {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+
+        .urgency-high {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+        }
+
+        .urgency-critical {
+            background: var(--danger);
+            color: white;
+        }
+
+        .layer-badge {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--info);
+        }
+
+        /* ECG Container */
+        .ecg-container {
+            flex: 1;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .ecg-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-card);
+        }
+
+        .ecg-canvas-wrapper {
+            position: relative;
+            height: calc(100% - 45px);
+            background-color: #1a1a1a;
+            background-image:
+                linear-gradient(var(--ecg-grid-large) 2px, transparent 2px),
+                linear-gradient(90deg, var(--ecg-grid-large) 2px, transparent 2px),
+                linear-gradient(var(--ecg-grid-small) 1px, transparent 1px),
+                linear-gradient(90deg, var(--ecg-grid-small) 1px, transparent 1px);
+            background-size: 125px 125px, 125px 125px, 25px 25px, 25px 25px;
+        }
+
+        /* Cuadricula educativa overlay */
+        .grid-labels {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 10px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .grid-labels strong {
+            color: var(--accent);
+        }
+
+        #ecgCanvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Sidebar derecho - Panel Educativo */
+        .edu-panel {
+            background: var(--bg-secondary);
+            border-left: 1px solid var(--border);
+            padding: 16px;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .edu-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .edu-card {
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 12px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .edu-card-title {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .edu-card-content {
+            font-size: 11px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .edu-measurement {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .edu-measurement:last-child {
+            border-bottom: none;
+        }
+
+        .measurement-name {
+            color: var(--text-secondary);
+        }
+
+        .measurement-value {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .measurement-squares {
+            color: var(--warning);
+            font-size: 10px;
+            margin-left: 8px;
+        }
+
+        .key-features {
+            list-style: none;
+            font-size: 11px;
+        }
+
+        .key-features li {
+            padding: 4px 0;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .key-features li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .alert-box {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--danger);
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 12px;
+        }
+
+        .alert-box-title {
+            color: var(--danger);
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .alert-box-content {
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+
+        .lead-tabs {
+            display: flex;
+            gap: 4px;
+        }
+
+        .lead-tab {
+            padding: 5px 12px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            color: var(--text-secondary);
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .lead-tab.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Izquierdo - Controles -->
+        <aside class="sidebar">
+            <div class="logo">
+                <span class="logo-icon">🫀</span>
+                <span class="logo-text">ECG Simulator</span>
+                <span class="logo-badge">EDU</span>
+            </div>
+
+            <!-- Layer Selector -->
+            <div>
+                <div class="section-title">Nivel de Simulación</div>
+                <div class="layer-selector">
+                    <button class="layer-btn active" data-layer="simple">
+                        <div>Simple</div>
+                        <div class="layer-info">&lt;1ms</div>
+                    </button>
+                    <button class="layer-btn" data-layer="intermediate">
+                        <div>Intermedio</div>
+                        <div class="layer-info">~100ms</div>
+                    </button>
+                    <button class="layer-btn" data-layer="realistic">
+                        <div>Realista</div>
+                        <div class="layer-info">H-H</div>
+                    </button>
+                </div>
+            </div>
+
+            <div>
+                <div class="section-title">Arritmia (54)</div>
+                <select class="arrhythmia-select" id="arrhythmiaSelect">
+                    <optgroup label="🟢 Normal">
+                        <option value="normal_sinus">Normal Sinus Rhythm</option>
+                    </optgroup>
+                    <optgroup label="🔵 Bradiarritmias (6)">
+                        <option value="sinus_bradycardia">Sinus Bradycardia</option>
+                        <option value="sick_sinus">Sick Sinus Syndrome</option>
+                        <option value="av_block_1">AV Block 1° (PR largo)</option>
+                        <option value="av_block_2_wenckebach">AV Block 2° Wenckebach</option>
+                        <option value="av_block_2_mobitz">AV Block 2° Mobitz II</option>
+                        <option value="av_block_complete">AV Block 3° (Completo)</option>
+                    </optgroup>
+                    <optgroup label="🟡 Taquiarritmias SVT (14)">
+                        <option value="sinus_tachycardia">Sinus Tachycardia</option>
+                        <option value="atrial_tachycardia">Atrial Tachycardia</option>
+                        <option value="atrial_flutter">Atrial Flutter</option>
+                        <option value="atrial_flutter_atypical">Atypical Flutter</option>
+                        <option value="atrial_fibrillation">Atrial Fibrillation</option>
+                        <option value="avnrt">AVNRT</option>
+                        <option value="avrt">AVRT</option>
+                        <option value="wpw">WPW Syndrome</option>
+                        <option value="psvt">PSVT</option>
+                        <option value="mat">MAT (Multifocal)</option>
+                        <option value="focal_at">Focal AT</option>
+                        <option value="intra_atrial_reentry">Intra-atrial Reentry</option>
+                        <option value="sinus_node_reentry">Sinus Node Reentry</option>
+                        <option value="ectopic_atrial">Ectopic Atrial</option>
+                    </optgroup>
+                    <optgroup label="🟣 Otras SVT (10)">
+                        <option value="pac">PAC</option>
+                        <option value="pjc">PJC</option>
+                        <option value="junctional_escape">Junctional Escape</option>
+                        <option value="junctional_tachy">Junctional Tachy</option>
+                        <option value="jet">JET</option>
+                        <option value="wandering_pacemaker">Wandering Pacemaker</option>
+                        <option value="sinus_arrhythmia">Sinus Arrhythmia</option>
+                        <option value="sinus_pause">Sinus Pause</option>
+                        <option value="sinus_arrest">Sinus Arrest</option>
+                        <option value="sinoatrial_block">SA Exit Block</option>
+                    </optgroup>
+                    <optgroup label="🔴 Ventriculares (16)">
+                        <option value="pvc">PVC</option>
+                        <option value="pvc_bigeminy">PVC Bigeminy</option>
+                        <option value="pvc_trigeminy">PVC Trigeminy</option>
+                        <option value="pvc_couplet">PVC Couplet</option>
+                        <option value="pvc_triplet">PVC Triplet</option>
+                        <option value="aivr">AIVR</option>
+                        <option value="ventricular_escape">Ventricular Escape</option>
+                        <option value="vt_mono">VT Monomorphic</option>
+                        <option value="vt_poly">VT Polymorphic</option>
+                        <option value="vt_sustained">VT Sustained</option>
+                        <option value="vt_nonsustained">NSVT</option>
+                        <option value="torsades">Torsades de Pointes</option>
+                        <option value="vf_coarse">VF Coarse</option>
+                        <option value="vf_fine">VF Fine</option>
+                        <option value="asystole">Asystole</option>
+                        <option value="idioventricular">Idioventricular</option>
+                    </optgroup>
+                    <optgroup label="⚡ Especiales (8)">
+                        <option value="parasystole">Parasystole</option>
+                        <option value="fusion">Fusion Beat</option>
+                        <option value="capture">Capture Beat</option>
+                        <option value="r_on_t">R-on-T</option>
+                        <option value="ashman">Ashman</option>
+                        <option value="concealed">Concealed Conduction</option>
+                        <option value="av_dissociation">AV Dissociation</option>
+                        <option value="brugada">Brugada Pattern</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <div class="control-label">
+                    <span>Frecuencia Cardíaca</span>
+                    <span id="hrValue">75 bpm</span>
+                </div>
+                <input type="range" class="slider" id="hrSlider" min="20" max="300" value="75">
+            </div>
+
+            <div class="control-group">
+                <div class="control-label">
+                    <span>Ruido</span>
+                    <span id="noiseValue">0%</span>
+                </div>
+                <input type="range" class="slider" id="noiseSlider" min="0" max="20" value="0">
+            </div>
+
+            <div class="control-group">
+                <div class="control-label">
+                    <span>Velocidad</span>
+                    <span id="speedValue">25 mm/s</span>
+                </div>
+                <input type="range" class="slider" id="speedSlider" min="10" max="50" value="25">
+            </div>
+
+            <div class="button-row">
+                <button class="btn btn-primary" id="startBtn">▶️ Start</button>
+                <button class="btn btn-danger" id="stopBtn">⏹️ Stop</button>
+            </div>
+
+            <div
+                style="margin-top: auto; padding-top: 12px; border-top: 1px solid var(--border); font-size: 10px; color: var(--text-secondary);">
+                <div>Cobertura: <strong style="color: var(--accent);">54/54</strong></div>
+                <div>Modelo: <span id="modelInfo">Lookup Tables</span></div>
+            </div>
+        </aside>
+
+        <!-- Main Content - ECG -->
+        <main class="main-content">
+            <div class="header">
+                <h1 class="current-arrhythmia" id="currentName">Normal Sinus Rhythm</h1>
+                <div class="badge-row">
+                    <span class="layer-badge" id="layerBadge">SIMPLE</span>
+                    <span class="urgency-badge urgency-low" id="urgencyBadge">LOW</span>
+                </div>
+            </div>
+
+            <div class="ecg-container">
+                <div class="ecg-header">
+                    <div class="lead-tabs">
+                        <button class="lead-tab active" data-lead="II">DII</button>
+                        <button class="lead-tab" data-lead="I">DI</button>
+                        <button class="lead-tab" data-lead="V1">V1</button>
+                        <button class="lead-tab" data-lead="V5">V5</button>
+                    </div>
+                    <div style="color: var(--text-secondary); font-size: 11px;">
+                        📐 25mm/s | 10mm/mV
+                    </div>
+                </div>
+                <div class="ecg-canvas-wrapper">
+                    <canvas id="ecgCanvas"></canvas>
+                    <div class="grid-labels">
+                        <strong>📐 PAPEL ECG:</strong><br>
+                        1 cuadro pequeño = <strong>0.04s</strong> (40ms) | <strong>0.1mV</strong><br>
+                        1 cuadro grande = <strong>0.2s</strong> (200ms) | <strong>0.5mV</strong><br>
+                        5 cuadros grandes = <strong>1 segundo</strong>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Sidebar Derecho - Panel Educativo -->
+        <aside class="edu-panel">
+            <div class="edu-title">
+                📚 MODO EDUCATIVO
+            </div>
+
+            <div class="edu-card">
+                <div class="edu-card-title">📏 Mediciones en Cuadros</div>
+                <div class="edu-card-content">
+                    <div class="edu-measurement">
+                        <span class="measurement-name">Intervalo PR</span>
+                        <span>
+                            <span class="measurement-value" id="eduPR">160ms</span>
+                            <span class="measurement-squares" id="eduPRsq">(4 cuadros)</span>
+                        </span>
+                    </div>
+                    <div class="edu-measurement">
+                        <span class="measurement-name">Duración QRS</span>
+                        <span>
+                            <span class="measurement-value" id="eduQRS">80ms</span>
+                            <span class="measurement-squares" id="eduQRSsq">(2 cuadros)</span>
+                        </span>
+                    </div>
+                    <div class="edu-measurement">
+                        <span class="measurement-name">Intervalo QT</span>
+                        <span>
+                            <span class="measurement-value" id="eduQT">400ms</span>
+                            <span class="measurement-squares" id="eduQTsq">(10 cuadros)</span>
+                        </span>
+                    </div>
+                    <div class="edu-measurement">
+                        <span class="measurement-name">Intervalo RR</span>
+                        <span>
+                            <span class="measurement-value" id="eduRR">800ms</span>
+                            <span class="measurement-squares" id="eduRRsq">(20 cuadros)</span>
+                        </span>
+                    </div>
+                    <div class="edu-measurement">
+                        <span class="measurement-name">Frecuencia</span>
+                        <span>
+                            <span class="measurement-value" id="eduHR">75 bpm</span>
+                            <span class="measurement-squares" id="eduHRcalc">(1500/RR)</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="edu-card">
+                <div class="edu-card-title">🔍 Características Clave</div>
+                <div class="edu-card-content">
+                    <ul class="key-features" id="keyFeatures">
+                        <li>Onda P presente antes de cada QRS</li>
+                        <li>PR constante (120-200ms)</li>
+                        <li>QRS estrecho (&lt;120ms)</li>
+                        <li>Ritmo regular</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="edu-card">
+                <div class="edu-card-title">🧮 Cálculo de Frecuencia</div>
+                <div class="edu-card-content" id="hrCalculation">
+                    <strong>Método 1:</strong> 1500 ÷ cuadros pequeños entre R-R<br>
+                    <strong>Método 2:</strong> 300 ÷ cuadros grandes entre R-R<br>
+                    <strong>Método 3:</strong> Contar R en 6 segundos × 10
+                </div>
+            </div>
+
+            <div class="edu-card" id="mechanismCard">
+                <div class="edu-card-title">⚡ Mecanismo</div>
+                <div class="edu-card-content" id="mechanismContent">
+                    Automatismo normal del nodo sinusal.
+                    El impulso se origina en el nodo SA y se propaga normalmente.
+                </div>
+            </div>
+
+            <div class="alert-box" id="alertBox" style="display: none;">
+                <div class="alert-box-title">⚠️ ALERTA CLÍNICA</div>
+                <div class="alert-box-content" id="alertContent">
+                    Esta arritmia requiere atención inmediata.
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script src="ecg-simulator-edu.js"></script>
+</body>
+
+</html>
