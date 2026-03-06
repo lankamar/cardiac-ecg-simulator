@@ -6,6 +6,34 @@
 
 **Simulador profesional de electrocardiogramas con 54 arritmias cardíacas y arquitectura de 3 capas superpuestas.**
 
+---
+
+## 📜 Historia y Origen del Proyecto
+
+Este repositorio es la **Generación 3** — la versión científica y profesional — de un proyecto que nació de una colaboración académica y fue escalando progresivamente.
+
+### La Evolución en 4 Generaciones
+
+| Repo | Generación | Descripción |
+|------|-----------|-------------|
+| [`ECG-Simulator`](https://github.com/lankamar/ECG-Simulator) | V1 | Primer prototipo educativo — 12 derivaciones |
+| [`ECG-Simulator-V0-Beta`](https://github.com/lankamar/ECG-Simulator-V0-Beta) | V0-Beta | IA + Mobile-first UX (Vercel) |
+| [`ECG-Simulator2`](https://github.com/lankamar/ECG-Simulator2) | V2 | Colaboración con Lic. Cuence (autor de libro ECG) + Gemini AI |
+| **`cardiac-ecg-simulator`** | **V3** ⭐ | **Motor científico Python — versión actual** |
+
+El proyecto nació de una colaboración con el **Licenciado Cuence**, autor de un libro especializado en electrocardiografía, cuya base teórica fue digitalizada en `ECG-Simulator2`. A partir de allí se planteó la visión de escalar hacia un motor científico capaz de reproducir fielmente los modelos electrofisiológicos usados en investigación.
+
+### Visión de Escala Futura
+```
+Nivel 1 → Visualización 2D de trazados ECG (12 derivaciones)   ✅ Implementado
+Nivel 2 → IA explicativa e interactiva                          ✅ En ECG-Simulator2
+Nivel 3 → Visualización 3D del recorrido eléctrico cardíaco     🔄 Planificado
+Nivel 4 → Recreación de casos clínicos reales                   📋 Roadmap
+Nivel 5 → Hipótesis diagnósticas asistidas por IA               📋 Roadmap
+```
+
+---
+
 ## 🎯 Características
 
 - **54 Arritmias Documentadas**: Supraventriculares, ventriculares, de conducción y fenómenos especiales
@@ -15,6 +43,8 @@
   - 🔴 **Realistic Layer**: Hodgkin-Huxley completo (investigación)
 - **12 Derivaciones ECG**: Standard limb + precordial leads
 - **Fundamentado en Ciencia**: Basado en Hodgkin-Huxley 1952, Luo & Rudy 1991, ten Tusscher 2004
+
+---
 
 ## 🚀 Instalación
 
@@ -29,6 +59,8 @@ pip install -e .
 # Ejecutar tests
 pytest tests/ -v
 ```
+
+---
 
 ## 📖 Uso Rápido
 
@@ -51,33 +83,27 @@ ecg.plot()
 ecg.save('afib_example.png')
 ```
 
+---
+
 ## 🏗️ Arquitectura de 3 Capas
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                    REALISTIC LAYER                      │
-│   Hodgkin-Huxley • Bidomain • 3D Tissue Propagation    │
-│                  (Segundos de cómputo)                  │
+│                    REALISTIC LAYER                       │
+│          Hodgkin-Huxley • Bidomain • 3D Tissue           │
+│                  (Segundos de cómputo)                   │
 ├─────────────────────────────────────────────────────────┤
-│                  INTERMEDIATE LAYER                     │
-│   Parametric Models • Pre-computed Templates           │
-│                  (10-100ms latencia)                    │
+│                  INTERMEDIATE LAYER                      │
+│          Parametric Models • Pre-computed Templates      │
+│                    (10-100ms latencia)                   │
 ├─────────────────────────────────────────────────────────┤
-│                    SIMPLE LAYER                         │
-│   Lookup Tables • Direct Morphology • Real-time        │
-│                  (<1ms latencia)                        │
+│                     SIMPLE LAYER                         │
+│          Lookup Tables • Direct Morphology • Real-time   │
+│                      (<1ms latencia)                     │
 └─────────────────────────────────────────────────────────┘
 ```
 
-## 📊 Arritmias Soportadas
-
-| Categoría | Cantidad | Ejemplos |
-|-----------|----------|----------|
-| Supraventriculares Bradicardia | 6 | Bradicardia sinusal, Bloqueos AV |
-| Supraventriculares Taquicardia | 14 | FA, Flutter, AVNRT, WPW |
-| Ventriculares | 16 | TV, FV, Torsades de Pointes |
-| Fenómenos Especiales | 8 | Parasistolia, R-on-T |
-| **Total** | **54** | |
+---
 
 ## 📁 Estructura del Proyecto
 
@@ -99,6 +125,8 @@ cardiac-ecg-simulator/
 └── .github/workflows/  # CI/CD
 ```
 
+---
+
 ## 📚 Documentación
 
 - [PRD - Product Requirements](docs/PRD.md)
@@ -106,6 +134,8 @@ cardiac-ecg-simulator/
 - [54 Arritmias Completas](docs/research/arrhythmias-54-types.md)
 - [Modelos Electrofisiológicos](docs/research/electrophysiology-models.md)
 - [Guía de Algoritmo](docs/specifications/algorithm-guide.md)
+
+---
 
 ## 🔬 Referencias Científicas
 
@@ -116,6 +146,8 @@ cardiac-ecg-simulator/
 - O'Hara & Rudy (2011) - Modelo humano de última generación
 - ESC/ACC Guidelines - Nomenclatura y clasificación estándar
 
+---
+
 ## 🤝 Contribuir
 
 1. Fork este repositorio
@@ -124,14 +156,16 @@ cardiac-ecg-simulator/
 4. Push a la rama (`git push origin feature/nueva-arritmia`)
 5. Crea un Pull Request
 
+---
+
 ## 📄 Licencia
 
 MIT License - ver [LICENSE](LICENSE) para detalles.
 
+---
+
 ## 👨‍💻 Autor
 
-**Lankamar** - [GitHub](https://github.com/lankamar)
-
----
+**Lankamar** — [GitHub](https://github.com/lankamar)
 
 ⭐ Si este proyecto te es útil, considera darle una estrella!
