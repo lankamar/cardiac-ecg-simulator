@@ -1,171 +1,86 @@
 # 🫀 Cardiac ECG Simulator
+### *Arquitectura Electrofisiológica en Tres Capas y Marco Pedagógico de Simulación Clínica (Prebriefing, Briefing y Debriefing) para la Enseñanza de Arritmias*
 
-[![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://python.org)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/Tests-Passing-brightgreen.svg)](.github/workflows/tests.yml)
+[![Zenodo DOI (All Versions)](https://zenodo.org/badge/DOI/10.5281/zenodo.24326144.svg)](https://doi.org/10.5281/zenodo.24326144)
+[![Zenodo DOI v2.0.0](https://zenodo.org/badge/DOI/10.5281/zenodo.24326145.svg)](https://doi.org/10.5281/zenodo.24326145)
+[![ORCID](https://img.shields.io/badge/ORCID-0009--0008--8196--6291-A6CE39?logo=orcid&logoColor=white)](https://orcid.org/0009-0008-8196-6291)
+[![Google Scholar](https://img.shields.io/badge/Google_Scholar-ERLQOWcAAAAJ-4285F4?logo=google-scholar&logoColor=white)](https://scholar.google.com/citations?user=ERLQOWcAAAAJ&hl=es)
+[![APA 7th Edition](https://img.shields.io/badge/Standard-APA_7th_Edition-blue.svg)](https://apastyle.apa.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-**Simulador profesional de electrocardiogramas con 54 arritmias cardíacas y arquitectura de 3 capas superpuestas.**
-
----
-
-## 📜 Historia y Origen del Proyecto
-
-Este repositorio es la **Generación 3** — la versión científica y profesional — de un proyecto que nació de una colaboración académica y fue escalando progresivamente.
-
-### La Evolución en 4 Generaciones
-
-| Repo | Generación | Descripción |
-|------|-----------|-------------|
-| [`ECG-Simulator`](https://github.com/lankamar/ECG-Simulator) | V1 | Primer prototipo educativo — 12 derivaciones |
-| [`ECG-Simulator-V0-Beta`](https://github.com/lankamar/ECG-Simulator-V0-Beta) | V0-Beta | IA + Mobile-first UX (Vercel) |
-| [`ECG-Simulator2`](https://github.com/lankamar/ECG-Simulator2) | V2 | Colaboración con Lic. Cuence (autor de libro ECG) + Gemini AI |
-| **`cardiac-ecg-simulator`** | **V3** ⭐ | **Motor científico Python — versión actual** |
-
-El proyecto nació de una colaboración con el **Licenciado Cuence**, autor de un libro especializado en electrocardiografía, cuya base teórica fue digitalizada en `ECG-Simulator2`. A partir de allí se planteó la visión de escalar hacia un motor científico capaz de reproducir fielmente los modelos electrofisiológicos usados en investigación.
-
-### Visión de Escala Futura
-```
-Nivel 1 → Visualización 2D de trazados ECG (12 derivaciones)   ✅ Implementado
-Nivel 2 → IA explicativa e interactiva                          ✅ En ECG-Simulator2
-Nivel 3 → Visualización 3D del recorrido eléctrico cardíaco     🔄 Planificado
-Nivel 4 → Recreación de casos clínicos reales                   📋 Roadmap
-Nivel 5 → Hipótesis diagnósticas asistidas por IA               📋 Roadmap
-```
+- **Autor:** Lic. Marcelo Omar Lancry Kamycki
+- **Filiación Institucional:** Hospital de Clínicas «José de San Martín», Universidad de Buenos Aires (UBA) · Centro de Innovación en Tecnología y Pedagogía (CITEP–UBA)
+- **ORCID:** [https://orcid.org/0009-0008-8196-6291](https://orcid.org/0009-0008-8196-6291)
+- **Google Académico:** [https://scholar.google.com/citations?user=ERLQOWcAAAAJ&hl=es](https://scholar.google.com/citations?user=ERLQOWcAAAAJ&hl=es)
+- **Sitio Institucional:** [https://lankamar.github.io/](https://lankamar.github.io/)
+- **DOI Zenodo (Todas las versiones):** [https://doi.org/10.5281/zenodo.24326144](https://doi.org/10.5281/zenodo.24326144)
+- **DOI Versión 2.0.0 (APA 7.ª ed. Verificada):** [https://doi.org/10.5281/zenodo.24326145](https://doi.org/10.5281/zenodo.24326145)
+- **Paper Completo en PDF (Norma APA 7.ª ed.):** [paper/Kamycki_2026_Cardiac_ECG_Simulator.pdf](paper/Kamycki_2026_Cardiac_ECG_Simulator.pdf)
+- **Guía de Simulación Clínica (Prebriefing, Briefing y Debriefing):** [docs/SIMULACION_PREBRIEFING_DEBRIEFING.md](docs/SIMULACION_PREBRIEFING_DEBRIEFING.md)
 
 ---
 
-## 🎯 Características
+## Resumen Académico (Norma APA 7.ª Edición)
 
-- **54 Arritmias Documentadas**: Supraventriculares, ventriculares, de conducción y fenómenos especiales
-- **3 Capas de Simulación**:
-  - 🟢 **Simple Layer**: Lookup tables, <1ms latencia (entrenamiento)
-  - 🟡 **Intermediate Layer**: Modelos parametrizados, 10-100ms (clínica)
-  - 🔴 **Realistic Layer**: Hodgkin-Huxley completo (investigación)
-- **12 Derivaciones ECG**: Standard limb + precordial leads
-- **Fundamentado en Ciencia**: Basado en Hodgkin-Huxley 1952, Luo & Rudy 1991, ten Tusscher 2004
+La interpretación rápida y precisa de arritmias cardíacas constituye una competencia crítica en enfermería de cuidados intensivos y medicina clínica; sin embargo, la enseñanza basada únicamente en clases magistrales y trazados estáticos presenta limitaciones documentadas en la retención del conocimiento y la transferencia diagnóstica (Ardekani et al., 2023; Tubaishat & Tawalbeh, 2015; Viljoen et al., 2020). Enmarcado en la Metodología de Investigación en Ciencia del Diseño (DSRM; Peffers et al., 2007), **Cardiac ECG Simulator** implementa un motor de simulación electrocardiográfica en Python de 12 derivaciones estándar que integra 54 arritmias cardíacas (además del ritmo sinusal normal) sobre una arquitectura superpuesta de tres capas fisiológicas: `SimpleLayer` (tablas de morfología), `IntermediateLayer` (modelos paramétricos) y `RealisticLayer` (ecuaciones iónicas adaptadas de Hodgkin & Huxley, 1952), contextualizada en la síntesis matemática de señales ECG (McSharry et al., 2003). Su uso educativo se articula explícitamente con los estándares internacionales de simulación clínica: **Prebriefing** (Preparación y Briefing; INACSL Standards Committee et al., 2021a), ejecución del escenario simulado y **Debriefing** estructurado mediante los marcos **PEARLS** (Eppich & Cheng, 2015) y *Debriefing with Good Judgment* (INACSL Standards Committee et al., 2021b; Rudolph et al., 2006).
 
 ---
 
-## 🚀 Instalación
+## Ciclo Pedagógico de Simulación Clínica (INACSL 2021 + PEARLS)
+
+1. **Prebriefing — Preparación:** Entrega previa de objetivos de aprendizaje, guía de las 54 arritmias (`docs/research/arrhythmias-54-types.md`) y criterios basales de lectura ECG (INACSL Standards Committee et al., 2021a).
+2. **Prebriefing — Briefing:** Contrato de ficción, seguridad psicológica, orientación a las 12 derivaciones y a la capa activa (`simple`, `intermediate`, `realistic`), y asignación de roles (Rudolph et al., 2006).
+3. **Escenario Simulado:** Generación y transición dinámica de trazados ECG en tiempo real.
+4. **Debriefing Estructurado:** Sesión reflexiva en 4 fases (Reacción, Descripción, Análisis *Advocacy-Inquiry*, Resumen/Aplicación) bajo **PEARLS** (Eppich & Cheng, 2015) e **INACSL** (INACSL Standards Committee et al., 2021b).
+
+Ver desarrollo completo en [docs/SIMULACION_PREBRIEFING_DEBRIEFING.md](docs/SIMULACION_PREBRIEFING_DEBRIEFING.md) y [docs/PROPOSITO.md](docs/PROPOSITO.md).
+
+---
+
+## Arquitectura Técnica de 3 Capas y Uso Rápido
+
+- **54 Arritmias + Ritmo Sinusal Normal** (`55` entradas en `src/arrhythmias/types.py`) y **12 derivaciones estándar** (`I, II, III, aVR, aVL, aVF, V1–V6`).
+- **Simple Layer** (`src/layers/simple_layer.py`): tablas morfológicas (`< 1 ms` de latencia).
+- **Intermediate Layer** (`src/layers/intermediate_layer.py`): modelos paramétricos (`10–100 ms`).
+- **Realistic Layer** (`src/layers/realistic_layer.py`): ecuaciones iónicas de Hodgkin y Huxley (1952) con compuertas `m, h, n` y canales `Na+`, `K+`, `Leak`.
 
 ```bash
-# Clonar repositorio
 git clone https://github.com/lankamar/cardiac-ecg-simulator.git
 cd cardiac-ecg-simulator
-
-# Instalar dependencias
 pip install -e .
-
-# Ejecutar tests
 pytest tests/ -v
 ```
-
----
-
-## 📖 Uso Rápido
 
 ```python
 from src.core.simulator import CardiacSimulator
 from src.arrhythmias import ArrhythmiaType
 
-# Crear simulador
 sim = CardiacSimulator(layer='simple')
-
-# Generar ECG de fibrilación auricular
 ecg = sim.generate(
-    arrhythmia=ArrhythmiaType.ATRIAL_FIBRILLATION,
+    arrhythmia=ArrhythmiaType.SUPRA_TACHY_ATRIAL_FIBRILLATION,
     duration_seconds=10,
     leads=['II', 'V1', 'V5']
 )
-
-# Plotear resultado
 ecg.plot()
-ecg.save('afib_example.png')
 ```
 
 ---
 
-## 🏗️ Arquitectura de 3 Capas
+## Cómo citar este trabajo (Norma APA 7.ª Edición)
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                    REALISTIC LAYER                       │
-│          Hodgkin-Huxley • Bidomain • 3D Tissue           │
-│                  (Segundos de cómputo)                   │
-├─────────────────────────────────────────────────────────┤
-│                  INTERMEDIATE LAYER                      │
-│          Parametric Models • Pre-computed Templates      │
-│                    (10-100ms latencia)                   │
-├─────────────────────────────────────────────────────────┤
-│                     SIMPLE LAYER                         │
-│          Lookup Tables • Direct Morphology • Real-time   │
-│                      (<1ms latencia)                     │
-└─────────────────────────────────────────────────────────┘
-```
+> Lancry Kamycki, M. O. (2026). *Cardiac ECG Simulator: Arquitectura electrofisiológica en tres capas y marco pedagógico de simulación clínica (Prebriefing, Briefing y Debriefing) para la enseñanza de arritmias* (Version 2.0.0). Zenodo. https://doi.org/10.5281/zenodo.24326145
 
 ---
 
-## 📁 Estructura del Proyecto
+## Referencias Bibliográficas (Norma APA 7.ª Edición)
 
-```
-cardiac-ecg-simulator/
-├── src/
-│   ├── core/           # Núcleo del simulador
-│   ├── layers/         # Capas: simple, intermediate, realistic
-│   ├── arrhythmias/    # 54 tipos de arritmias
-│   ├── ecg/            # Generación de ECG 12-lead
-│   ├── models/         # Modelos matemáticos (HH, LuoRudy)
-│   └── utils/          # Utilidades
-├── tests/              # Tests unitarios y de integración
-├── docs/
-│   ├── research/       # Investigación científica
-│   ├── specifications/ # Especificaciones técnicas
-│   └── development/    # Documentación de desarrollo
-├── examples/           # Scripts de ejemplo
-└── .github/workflows/  # CI/CD
-```
-
----
-
-## 📚 Documentación
-
-- [PRD - Product Requirements](docs/PRD.md)
-- [Arquitectura](docs/ARCHITECTURE.md)
-- [54 Arritmias Completas](docs/research/arrhythmias-54-types.md)
-- [Modelos Electrofisiológicos](docs/research/electrophysiology-models.md)
-- [Guía de Algoritmo](docs/specifications/algorithm-guide.md)
-
----
-
-## 🔬 Referencias Científicas
-
-- Hodgkin & Huxley (1952) - Ecuaciones fundamentales de potencial de acción
-- Noble (1962) - Primer modelo de célula cardíaca
-- Luo & Rudy (1991, 1994) - Modelos clásicos ventriculares
-- ten Tusscher et al. (2004) - Modelo humano completo
-- O'Hara & Rudy (2011) - Modelo humano de última generación
-- ESC/ACC Guidelines - Nomenclatura y clasificación estándar
-
----
-
-## 🤝 Contribuir
-
-1. Fork este repositorio
-2. Crea una rama para tu feature (`git checkout -b feature/nueva-arritmia`)
-3. Commit tus cambios (`git commit -am 'Agregar nueva arritmia XYZ'`)
-4. Push a la rama (`git push origin feature/nueva-arritmia`)
-5. Crea un Pull Request
-
----
-
-## 📄 Licencia
-
-MIT License - ver [LICENSE](LICENSE) para detalles.
-
----
-
-## 👨‍💻 Autor
-
-**Lankamar** — [GitHub](https://github.com/lankamar)
-
-⭐ Si este proyecto te es útil, considera darle una estrella!
+- Ardekani, A., Hider, A. M., Rastegar Kazerooni, A. A., Hosseini, S. A., Roshanshad, A., Amini, M., & Kojuri, J. (2023). Surfing the clinical trials of ECG teaching to medical students: A systematic review. *Journal of Education and Health Promotion*, *12*, Article 107. https://doi.org/10.4103/jehp.jehp_780_22
+- Eppich, W., & Cheng, A. (2015). Promoting Excellence and Reflective Learning in Simulation (PEARLS): Development and rationale for a blended approach to health care simulation debriefing. *Simulation in Healthcare*, *10*(2), 106–115. https://doi.org/10.1097/SIH.0000000000000072
+- Hodgkin, A. L., & Huxley, A. F. (1952). A quantitative description of membrane current and its application to conduction and excitation in nerve. *The Journal of Physiology*, *117*(4), 500–544. https://doi.org/10.1113/jphysiol.1952.sp004764
+- INACSL Standards Committee, McDermott, D. S., Ludlow, J., Horsley, E., & Meakim, C. (2021a). Healthcare Simulation Standards of Best Practice™ Prebriefing: Preparation and Briefing. *Clinical Simulation in Nursing*, *58*, 9–13. https://doi.org/10.1016/j.ecns.2021.08.008
+- INACSL Standards Committee, Decker, S., Alinier, G., Crawford, S. B., Gordon, R. M., Jenkins, D., & Wilson, C. (2021b). Healthcare Simulation Standards of Best Practice™ The Debriefing Process. *Clinical Simulation in Nursing*, *58*, 27–32. https://doi.org/10.1016/j.ecns.2021.08.011
+- McSharry, P. E., Clifford, G. D., Tarassenko, L., & Smith, L. A. (2003). A dynamical model for generating synthetic electrocardiogram signals. *IEEE Transactions on Biomedical Engineering*, *50*(3), 289–294. https://doi.org/10.1109/TBME.2003.808805
+- Peffers, K., Tuunanen, T., Rothenberger, M. A., & Chatterjee, S. (2007). A design science research methodology for information systems research. *Journal of Management Information Systems*, *24*(3), 45–77. https://doi.org/10.2753/MIS0742-1222240302
+- Rudolph, J. W., Simon, R., Dufresne, R. L., & Raemer, D. B. (2006). There’s no such thing as “nonjudgmental” debriefing: A theory and method for debriefing with good judgment. *Simulation in Healthcare*, *1*(1), 49–55. https://doi.org/10.1097/01266021-200600110-00006
+- Tubaishat, A., & Tawalbeh, L. I. (2015). Effect of cardiac arrhythmia simulation on nursing students’ knowledge acquisition and retention. *Western Journal of Nursing Research*, *37*(9), 1160–1174. https://doi.org/10.1177/0193945914545134
+- Viljoen, C. A., Millar, R. S., Manning, K., & Burch, V. C. (2020). Effectiveness of blended learning versus lectures alone on ECG analysis and interpretation by medical students. *BMC Medical Education*, *20*(1), Article 488. https://doi.org/10.1186/s12909-020-02403-y

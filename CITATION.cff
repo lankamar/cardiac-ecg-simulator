@@ -1,0 +1,49 @@
+cff-version: 1.2.0
+title: "Cardiac ECG Simulator: Arquitectura Electrofisiológica en Tres Capas y Marco Pedagógico de Simulación Clínica (Prebriefing, Briefing y Debriefing)"
+message: "Si utilizás este simulador de ECG, sus capas fisiológicas o su guía de Prebriefing/Debriefing en docencia o investigación, por favor citalo con los siguientes metadatos (Norma APA 7.ª edición)."
+type: software
+authors:
+  - family-names: "Lancry Kamycki"
+    given-names: "Marcelo Omar"
+    orcid: "https://orcid.org/0009-0008-8196-6291"
+    affiliation: "Hospital de Clínicas 'José de San Martín', Universidad de Buenos Aires (UBA) · Centro de Innovación en Tecnología y Pedagogía (CITEP-UBA)"
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.24326145
+    description: "Zenodo DOI (Version 2.0.0 — APA 7th ed. Verified)"
+  - type: doi
+    value: 10.5281/zenodo.24326144
+    description: "Zenodo Concept DOI (All versions)"
+repository-code: "https://github.com/lankamar/cardiac-ecg-simulator"
+url: "https://lankamar.github.io/"
+abstract: >-
+  Simulador electrocardiográfico de 12 derivaciones con 54 arritmias cardíacas (y ritmo
+  sinusal normal) estructurado en tres capas fisiológicas (SimpleLayer, IntermediateLayer
+  y RealisticLayer con ecuaciones de Hodgkin-Huxley), acoplado a estándares internacionales
+  de simulación clínica INACSL (Prebriefing, Briefing y Debriefing con marcos PEARLS y
+  Good Judgment) bajo Metodología de Investigación en Ciencia del Diseño (DSRM).
+keywords:
+  - "clinical simulation"
+  - "electrocardiography"
+  - "cardiac arrhythmias"
+  - "prebriefing"
+  - "debriefing"
+  - "nursing education"
+  - "Hodgkin-Huxley"
+  - "design science research"
+license: MIT
+version: 2.0.0
+date-released: "2026-11-17"
+preferred-citation:
+  type: report
+  authors:
+    - family-names: "Lancry Kamycki"
+      given-names: "Marcelo Omar"
+      orcid: "https://orcid.org/0009-0008-8196-6291"
+      affiliation: "Hospital de Clínicas 'José de San Martín', Universidad de Buenos Aires (UBA) · CITEP-UBA"
+  title: "Cardiac ECG Simulator: Arquitectura Electrofisiológica en Tres Capas y Marco Pedagógico de Simulación Clínica (Prebriefing, Briefing y Debriefing) para la Enseñanza de Arritmias (Version 2.0.0)"
+  year: 2026
+  institution:
+    name: "Zenodo / Universidad de Buenos Aires (UBA)"
+  doi: 10.5281/zenodo.24326145
+  url: "https://doi.org/10.5281/zenodo.24326144"

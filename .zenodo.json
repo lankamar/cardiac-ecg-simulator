@@ -1,0 +1,53 @@
+{
+  "title": "Cardiac ECG Simulator: Arquitectura Electrofisiológica en Tres Capas y Marco Pedagógico de Simulación Clínica (Prebriefing, Briefing y Debriefing) para la Enseñanza de Arritmias",
+  "version": "2.0.0",
+  "upload_type": "publication",
+  "publication_type": "workingpaper",
+  "publication_date": "2026-11-17",
+  "creators": [
+    {
+      "name": "Lancry Kamycki, Marcelo Omar",
+      "affiliation": "Hospital de Clínicas 'José de San Martín', Universidad de Buenos Aires (UBA) · Centro de Innovación en Tecnología y Pedagogía (CITEP-UBA)",
+      "orcid": "0009-0008-8196-6291"
+    }
+  ],
+  "description": "<p>Diseño técnico-pedagógico de <strong>Cardiac ECG Simulator</strong>, un motor de simulación electrocardiográfica en Python de 12 derivaciones con 54 arritmias cardíacas sobre tres capas fisiológicas (SimpleLayer, IntermediateLayer y RealisticLayer con ecuaciones de Hodgkin &amp; Huxley, 1952), integrado con los estándares internacionales de simulación clínica INACSL (2021a, 2021b) para Prebriefing, Briefing y Debriefing (PEARLS y Good Judgment) bajo Ciencia del Diseño (Peffers et al., 2007).</p>",
+  "access_right": "open",
+  "license": "CC-BY-4.0",
+  "language": "spa",
+  "keywords": [
+    "Clinical Simulation",
+    "Electrocardiography",
+    "Cardiac Arrhythmias",
+    "Prebriefing",
+    "Debriefing",
+    "Nursing Education",
+    "Hodgkin-Huxley",
+    "Design Science Research",
+    "LANKAMAR"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/lankamar/cardiac-ecg-simulator",
+      "relation": "isSupplementTo",
+      "resource_type": "software"
+    },
+    {
+      "identifier": "https://lankamar.github.io/",
+      "relation": "isDocumentedBy",
+      "resource_type": "publication-other"
+    }
+  ],
+  "references": [
+    "Ardekani, A., Hider, A. M., Rastegar Kazerooni, A. A., Hosseini, S. A., Roshanshad, A., Amini, M., & Kojuri, J. (2023). Surfing the clinical trials of ECG teaching to medical students: A systematic review. Journal of Education and Health Promotion, 12, Article 107. https://doi.org/10.4103/jehp.jehp_780_22",
+    "Eppich, W., & Cheng, A. (2015). Promoting Excellence and Reflective Learning in Simulation (PEARLS): Development and rationale for a blended approach to health care simulation debriefing. Simulation in Healthcare, 10(2), 106-115. https://doi.org/10.1097/SIH.0000000000000072",
+    "Hodgkin, A. L., & Huxley, A. F. (1952). A quantitative description of membrane current and its application to conduction and excitation in nerve. The Journal of Physiology, 117(4), 500-544. https://doi.org/10.1113/jphysiol.1952.sp004764",
+    "INACSL Standards Committee, McDermott, D. S., Ludlow, J., Horsley, E., & Meakim, C. (2021a). Healthcare Simulation Standards of Best Practice Prebriefing: Preparation and Briefing. Clinical Simulation in Nursing, 58, 9-13. https://doi.org/10.1016/j.ecns.2021.08.008",
+    "INACSL Standards Committee, Decker, S., Alinier, G., Crawford, S. B., Gordon, R. M., Jenkins, D., & Wilson, C. (2021b). Healthcare Simulation Standards of Best Practice The Debriefing Process. Clinical Simulation in Nursing, 58, 27-32. https://doi.org/10.1016/j.ecns.2021.08.011",
+    "McSharry, P. E., Clifford, G. D., Tarassenko, L., & Smith, L. A. (2003). A dynamical model for generating synthetic electrocardiogram signals. IEEE Transactions on Biomedical Engineering, 50(3), 289-294. https://doi.org/10.1109/TBME.2003.808805",
+    "Peffers, K., Tuunanen, T., Rothenberger, M. A., & Chatterjee, S. (2007). A design science research methodology for information systems research. Journal of Management Information Systems, 24(3), 45-77. https://doi.org/10.2753/MIS0742-1222240302",
+    "Rudolph, J. W., Simon, R., Dufresne, R. L., & Raemer, D. B. (2006). There's no such thing as 'nonjudgmental' debriefing: A theory and method for debriefing with good judgment. Simulation in Healthcare, 1(1), 49-55. https://doi.org/10.1097/01266021-200600110-00006",
+    "Tubaishat, A., & Tawalbeh, L. I. (2015). Effect of cardiac arrhythmia simulation on nursing students' knowledge acquisition and retention. Western Journal of Nursing Research, 37(9), 1160-1174. https://doi.org/10.1177/0193945914545134",
+    "Viljoen, C. A., Millar, R. S., Manning, K., & Burch, V. C. (2020). Effectiveness of blended learning versus lectures alone on ECG analysis and interpretation by medical students. BMC Medical Education, 20(1), Article 488. https://doi.org/10.1186/s12909-020-02403-y"
+  ]
+}
